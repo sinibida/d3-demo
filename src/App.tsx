@@ -67,7 +67,14 @@ function App() {
           ref={zoomCatcherRef}
         ></div>
         {/* Contents */}
-        <div>
+        <div
+          style={{
+            overflow: "hidden",
+            position: "relative",
+            width: "100%",
+            height: "100%",
+          }}
+        >
           {tempData.map((x, i) => (
             <Cell key={i} transform={transform} data={x} />
           ))}
