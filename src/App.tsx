@@ -1,16 +1,43 @@
+import { select, zoom, ZoomTransform } from "d3";
 import { useEffect, useRef, useState } from "react";
 import styles from "./App.module.css";
-import { select, zoom, ZoomTransform } from "d3";
+import { CellData, Transform } from "./types";
+import Cell from "./Cell";
 
-type Transform = {
-  x: number;
-  y: number;
-  k: number;
-};
+const tempData: CellData[] = [
+  {
+    x: 0,
+    y: 0,
+    content: "Hello!",
+  },
+  {
+    x: 0,
+    y: 100,
+    content: "World!",
+  },
+  {
+    x: 100,
+    y: 100,
+    content: "Nice!!!",
+  },
+  ...Array.from({ length: 10 * 10 }, (_, i) => {
+    const y = Math.floor(i / 10);
+    const x = i % 10;
+    return {
+      x: x * 100 - 450,
+      y: y * 100 - 450,
+      content: "O",
+    };
+  }),
+];
 
 function App() {
   const zoomCatcherRef = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState<Transform>({});
+  const [transform, setTransform] = useState<Transform>({
+    x: 0,
+    y: 0,
+    k: 1,
+  });
 
   useEffect(() => {
     const container = select(zoomCatcherRef.current as Element);
@@ -25,21 +52,26 @@ function App() {
     container.call(zoomFn);
   }, []);
 
-  const contentStyle: React.CSSProperties = {
-    position: "absolute",
-    left: transform.x,
-    top: transform.y,
-    transform: `scale(${transform.k})`,
-  };
-
   return (
     <div>
       <div className={styles.container}>
         <div
-          style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 0, zIndex: 100 }}
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            zIndex: 100,
+          }}
           ref={zoomCatcherRef}
         ></div>
-        <div style={contentStyle}>Hello World</div>
+        {/* Contents */}
+        <div>
+          {tempData.map((x, i) => (
+            <Cell key={i} transform={transform} data={x} />
+          ))}
+        </div>
       </div>
 
       <div></div>
