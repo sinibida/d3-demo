@@ -9,6 +9,8 @@ export type CellProps = {
 export default function Cell({ data, transform: t }: CellProps) {
   const calcX = (data.x) * t.k + t.x;
   const calcY = (data.y) * t.k + t.y;
+  // translate & scale 사용함.
+  // - left&top: 내용의 의도치 않은 줄바꿈이 생김
   const containerStyle: React.CSSProperties = {
     position: "absolute",
     // left: (data.x) * t.k + t.x,

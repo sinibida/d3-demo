@@ -31,17 +31,22 @@ const tempData: CellData[] = [
   },
 ];
 
+// 0. App
 function App() {
-  const zoomCatcherRef = useRef<HTMLDivElement>(null);
+  // 1. 변수 선언
   const [transform, setTransform] = useState<Transform>({
     x: 0,
     y: 0,
     k: 1,
   });
+  const zoomCatcherRef = useRef<HTMLDivElement>(null);
 
+  // 2. Mount 시
   useEffect(() => {
+    // 2.1. Select: DOM 선택 후...
     const container = select(zoomCatcherRef.current as Element);
 
+    // 2.2. Zoom listener를 적용하는 함수 구함
     const zoomFn = zoom().on("zoom", (event) => {
       const transform: ZoomTransform = event.transform;
       setTransform({
@@ -49,9 +54,12 @@ function App() {
       });
     });
 
+    // 2.3. 그리고 call로 적용
+    // call: zoomFn(selection, ...args)와 같은 형식의 함수를 selection에 '적용'
     container.call(zoomFn);
   }, []);
 
+  // 3. 배경 이미지 설정
   //https://github.com/Digital-Tvilling/react-jsoncanvas/blob/main/src/index.tsx#L37C16-L41C10
   const bgStyle: React.CSSProperties = {
     backgroundSize: `calc(${transform.k} * 20px) calc(${transform.k} * 20px)`,
@@ -60,6 +68,8 @@ function App() {
     backgroundPositionY: transform.y - transform.k * 10,
   };
 
+  // 4. 제작
+  // css 파일의 z-index, inset&position을 눈여겨 볼 것!
   return (
     <div>
       <div className={styles.container}>
