@@ -1,4 +1,5 @@
 import { CellData, Transform } from "./types";
+import styles from "./Cell.module.css";
 
 export type CellProps = {
   data: CellData;
@@ -12,5 +13,5 @@ export default function Cell({ data, transform: t }: CellProps) {
     top: (data.y) * t.k + t.y,
     transform: `scale(${t.k})`,
   };
-  return <div style={containerStyle}>{data.content}</div>;
+  return <div className={styles.container} style={containerStyle}>{data.content}</div>;
 }
