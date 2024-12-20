@@ -1,7 +1,6 @@
 .container {
   width: 500px;
   height: 500px;
-  background-color: pink;
   overflow: hidden;
   position: relative;
 }
@@ -22,4 +21,10 @@
   & > * {
     pointer-events: auto;
   }
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
 }

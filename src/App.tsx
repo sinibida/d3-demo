@@ -1,5 +1,5 @@
 import { select, zoom, ZoomTransform } from "d3";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./App.module.css";
 import { CellData, Transform } from "./types";
 import Cell from "./Cell";
@@ -29,15 +29,6 @@ const tempData: CellData[] = [
       </div>
     ),
   },
-  ...Array.from({ length: 10 * 10 }, (_, i) => {
-    const y = Math.floor(i / 10);
-    const x = i % 10;
-    return {
-      x: x * 100 - 450,
-      y: y * 100 - 450,
-      content: "O",
-    };
-  }),
 ];
 
 function App() {
@@ -61,6 +52,14 @@ function App() {
     container.call(zoomFn);
   }, []);
 
+  //https://github.com/Digital-Tvilling/react-jsoncanvas/blob/main/src/index.tsx#L37C16-L41C10
+  const bgStyle: React.CSSProperties = {
+    backgroundSize: `calc(${transform.k} * 20px) calc(${transform.k} * 20px)`,
+    backgroundImage: `radial-gradient(#ddd calc(${transform.k}*0.5px + 0.5px), transparent 0)`,
+    backgroundPositionX: transform.x - transform.k * 10,
+    backgroundPositionY: transform.y - transform.k * 10,
+  };
+
   return (
     <div>
       <div className={styles.container}>
@@ -71,6 +70,8 @@ function App() {
             <Cell key={i} transform={transform} data={x} />
           ))}
         </div>
+
+        <div className={styles.background} style={bgStyle}></div>
       </div>
 
       <div></div>
