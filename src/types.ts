@@ -1,7 +1,7 @@
 export type CellData = {
   x: number;
   y: number;
-  content: string;
+  content: React.ReactNode;
 };
 
 export type Transform = {

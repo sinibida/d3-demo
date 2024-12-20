@@ -20,6 +20,15 @@ const tempData: CellData[] = [
     y: 100,
     content: "Nice!!!",
   },
+  {
+    x: 200,
+    y: 200,
+    content: (
+      <div style={{ border: "1px red solid", borderRadius: 4, padding: 8 }}>
+        Custom Contenet
+      </div>
+    ),
+  },
   ...Array.from({ length: 10 * 10 }, (_, i) => {
     const y = Math.floor(i / 10);
     const x = i % 10;
@@ -55,10 +64,7 @@ function App() {
   return (
     <div>
       <div className={styles.container}>
-        <div
-          className={styles.zoomCacatcher}
-          ref={zoomCatcherRef}
-        ></div>
+        <div className={styles.zoomCacatcher} ref={zoomCatcherRef}></div>
         {/* Contents */}
         <div className={styles.contentContainer}>
           {tempData.map((x, i) => (
